@@ -14,7 +14,7 @@ email_regex = re.compile(r'(\b[\w.]+@+[\w.]+.+[\w.]\b)')
 
 def get_url(url):
     req = urllib2.Request(url, None, header)
-    response = urllib2.urlopen(req)geo
+    response = urllib2.urlopen(req)
     root = pq(response.read().decode('utf-8'))
     return root
 
