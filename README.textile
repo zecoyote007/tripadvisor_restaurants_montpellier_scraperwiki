@@ -1,0 +1,7 @@
+To change the city:
+# go to www.tripadvisor.com
+# search for the respective city
+# copy geoID; e.g. http://www.tripadvisor.de/RestaurantSearch?geo= *294265*
+# paste the id into the scraper link in line 88
+
+*NOTE*: only change the geoID
