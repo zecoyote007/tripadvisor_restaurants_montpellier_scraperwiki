@@ -6,10 +6,11 @@ import re
 from lxml import etree
 from pyquery import PyQuery as pq
 
-print "Starting"
+scrape_url = "http://www.tripadvisor.com/RestaurantSearch?geo=187153"
 
 header = { 'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.47 Safari/536.11',
            'Cookie': 'PHPSESSID=de45029e5e2fab4f6e5eef56515d6c1c; __utma=123692957.1658163614.1349740913.1349740913.1352756518.2; __utmb=204497347.1.10.1342787814; __utmc=204497347; __utmz=204497347.1341998344.1.1.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided)' }
+
 email_regex = re.compile(r'(\b[\w.]+@+[\w.]+.+[\w.]\b)')
 
 def get_url(url):
@@ -17,12 +18,6 @@ def get_url(url):
     response = urllib2.urlopen(req)
     root = pq(response.read().decode('utf-8'))
     return root
-
-def parse_field(element):
-    field_string = element.html()
-    if ":" in field_string:
-        field_string = field_string.split(":")[1]
-    return field_string
 
 def strip_tags(value):
     """Returns the given HTML with all tags stripped."""
@@ -33,58 +28,41 @@ def strip_tags(value):
 def parse_list(root):
     """ Takes a listing page and indexes all the listings in it """
     for el in root(".listing a.property_title"):
-        page_url = "http://www.tripadvisor.com" + el.get("href");
-        print "Url: %s" % page_url
+        page_url = "http://www.tripadvisor.com" + el.get("href")
         page = get_url(page_url)
-
-        name = strip_tags(page("#HEADING_GROUP h1").html())
-        number_ratings =strip_tags( page(".more") .html())
-        ranking = page(".sprite-ratings").attr("content")
-        price = strip_tags( page(".info-label") .html())
-        address = strip_tags(page(".format_address").html())
-        #url = strip_tags(page(".row-fluid .row-fluid *[itemprop=url] a").attr("href"))
-        telephone = strip_tags(page(".sprite-greenPhone").next().html())
-        email_raw = strip_tags(page(".sprite-greenEmail").next().attr("onclick"))
-        email = email_regex.findall(email_raw)  
-        if email:
-            email = email[0]
-        description = strip_tags(page(".listing_description").html()).strip()[:1200]
         
-        print email
-        data = {
-            'name': name,
-            'source_url': page_url,
-            #'url': url,
-            'rating': ranking,
-            'email': email,
-            'number_of_ratings': number_ratings,
-            #'activity': activity,
-            'price': price,
-            'address': address,
-            'telephone': telephone,
-            'description': description,
+        email_raw = strip_tags(page(".sprite-grayEmail").next().attr("onclick"))
+        email = email_regex.findall(email_raw)
+        
+        if email:
+          email = email[0]
+          print email
 
-        }
-        scraperwiki.sqlite.save(unique_keys=['source_url'], data=data, table_name="tripadvisor_SOT")
+def scrape_activities_in_a_region(url):
+    for el in url(".geo_image a"):
+        sub_url = "http://www.tripadvisor.com" + el.get("href")
+        
+        # go to that sub location page
+        sub_page = get_url(sub_url)
+        
+        # go to the activities page
+        if sub_page(".filter#ATTR_CATEGORY_42"):
+            sub_activities_url = "http://www.tripadvisor.com" + sub_page(".filter#ATTR_CATEGORY_42 a").attr("href")
+            sub_activities_page = get_url(sub_activities_url)
+        
+            # go to the individual page (if it exists)
+            for el in sub_activities_page(".element_wrap"):
+                   sub_activities_adv_url = "http://www.tripadvisor.com" + sub_activities_page(".element_wrap a").attr("href")
+                   sub_activities_adv_page = get_url(sub_activities_adv_url)
+                   
+                   print sub_activities_adv_url
+               
+                   # get the emails
+                   #parse_list(sub_activities_adv_page)
+        
+
+scrape_url_page = get_url(scrape_url)
+scrape_activities_in_a_region(scrape_url_page)
 
 
-def parse_listing_pages(start_url):
-    # not iterate over the pages
-    count = 0
-    while True:
-        url = start_url % (count) # targets each page in the list
-        print "On page %s" % url
-        root = get_url(url)
-
-        # check if there are items, if not stop since you exceeded the total pages
-        if not root(".listing"):
-            print "Reached end at page %s" % count
-            break
-
-        # this will parse the first listing page
-        parse_list(root)
-        print "Finished page %s" % count
-        count = count + 30
-
-start_url = "http://www.tripadvisor.com/RestaurantSearch?geo=187153&o=a%s&sortOrder=popularity"
-parse_listing_pages(start_url)
+#parse_list(scrape_url_page)
