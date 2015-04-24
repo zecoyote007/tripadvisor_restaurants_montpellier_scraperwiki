@@ -14,7 +14,7 @@ email_regex = re.compile(r'(\b[\w.]+@+[\w.]+.+[\w.]\b)')
 
 def get_url(url):
     req = urllib2.Request(url, None, header)
-    response = urllib2.urlopen(req)
+    response = urllib2.urlopen(req)geo
     root = pq(response.read().decode('utf-8'))
     return root
 
@@ -86,5 +86,5 @@ def parse_listing_pages(start_url):
         print "Finished page %s" % count
         count = count + 30
 
-start_url = "http://www.tripadvisor.com/RestaurantSearch?geo=298450&o=a%s&sortOrder=popularity"
+start_url = "http://www.tripadvisor.com/RestaurantSearch?geo=187153&o=a%s&sortOrder=popularity"
 parse_listing_pages(start_url)
