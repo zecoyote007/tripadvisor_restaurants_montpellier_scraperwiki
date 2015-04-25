@@ -7,7 +7,7 @@ from lxml import etree
 from pyquery import PyQuery as pq
 
 #scrape_url = "http://www.tripadvisor.com/RestaurantSearch?geo=187153"
-scrape_url = "http://www.tripadvisor.com/Restaurants-g1221643-Villeneuve_les_Maguelone_Herault_Languedoc_Roussillon.html"
+scrape_url = "http://www.tripadvisor.com/RestaurantSearch?geo=1221643"
 
 header = { 'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.47 Safari/536.11',
            'Cookie': 'PHPSESSID=de45029e5e2fab4f6e5eef56515d6c1c; __utma=123692957.1658163614.1349740913.1349740913.1352756518.2; __utmb=204497347.1.10.1342787814; __utmc=204497347; __utmz=204497347.1341998344.1.1.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided)' }
