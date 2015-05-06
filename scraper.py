@@ -46,7 +46,7 @@ def parse_list(root):
 	else:
 	    email = ""
 	print email
-        description = strip_tags(page(".listing_details").html())
+        description = strip_tags(page(".detailsOverlay").html())
 	print description
         
         data = {
@@ -60,7 +60,7 @@ def parse_list(root):
             'telephone': telephone,
             'description': description,
         }
-        scraperwiki.sqlite.save(unique_keys=['name'], data=data, table_name="tripadvisor")
+        scraperwiki.sqlite.save(unique_keys=['source_url'], data=data, table_name="tripadvisor")
         #scraperwiki.sqlite.save_var('lastindex', index)
 
 def scrape_activities_in_a_region(url):
