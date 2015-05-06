@@ -57,7 +57,7 @@ def parse_list(root):
             'telephone': telephone,
             'description': description,
         }
-        scraperwiki.sqlite.save(unique_keys=['source_url'], data=record)
+        scraperwiki.sqlite.save(unique_keys=['source_url'], data=record, table_name="tripadvisor")
         #scraperwiki.sqlite.save_var('lastindex', index)
 
 def scrape_activities_in_a_region(url):
