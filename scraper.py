@@ -43,9 +43,10 @@ def parse_list(root):
         email = email_regex.findall(email_raw)  
         if email:
             email = email[0]
-        #description = strip_tags(page(".listing_details").html()).strip()[:1200]
+	print email
+        description = strip_tags(page(".listing_details").html()).strip()[:1200]
+	print description
         
-        print email
         data = {
             'name': name,
             'source_url': page_url,
@@ -55,7 +56,7 @@ def parse_list(root):
             #'activity': activity,
             'address': address,
             'telephone': telephone,
-            #'description': description,
+            'description': description,
         }
         scraperwiki.sqlite.save(unique_keys=['source_url'], data=data, table_name="tripadvisor")
         #scraperwiki.sqlite.save_var('lastindex', index)
