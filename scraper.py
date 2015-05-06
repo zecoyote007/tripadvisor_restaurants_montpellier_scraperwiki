@@ -49,7 +49,7 @@ def parse_list(root):
 	    email = ""
 	print email
         #description = strip_tags(page(".detailsOverlayHide").html())
-	description = root.cssselect("div#EATERY_OVERLAY_CONTENTS")[0].html()
+	description = page("#EATERY_OVERLAY_CONTENTS")[0].html()
 	print description
         
         data = {
