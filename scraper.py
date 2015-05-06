@@ -40,9 +40,11 @@ def parse_list(root):
         #url = strip_tags(page(".row-fluid .row-fluid *[itemprop=url] a").attr("href"))
         telephone = strip_tags(page(".sprite-grayPhone").next().html())
 	email_raw = strip_tags(page(".sprite-grayEmail").next().attr("onclick"))
-        email = email_regex.findall(email_raw)  
-        if email:
-            email = email[0]
+        emails_parsed = email_regex.findall(email_raw)  
+        if emails_parsed:
+            email = emails_parsed[0]
+	else:
+	    email = ""
 	print email
         description = strip_tags(page(".listing_details").html()).strip()[:1200]
 	print description
