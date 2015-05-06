@@ -84,7 +84,6 @@ def parse_listing_pages(start_url):
         print "Finished page %s" % count
         count = count + 30
 
-start_url = "http://www.tripadvisor.com/AttractionsAjax-g186378?cat=25&o=a%s&sortOrder=popularity"
-parse_listing_pages(start_url)
+parse_listing_pages(scrape_url)
 
 
