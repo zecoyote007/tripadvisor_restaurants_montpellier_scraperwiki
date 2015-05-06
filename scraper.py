@@ -59,11 +59,11 @@ def scrape_activities_in_a_region(url):
                    print sub_activities_adv_url
                
                    # get the emails
-                   #parse_list(sub_activities_adv_page)
+                   parse_list(sub_activities_adv_page)
         
 
 scrape_url_page = get_url(scrape_url)
 scrape_activities_in_a_region(scrape_url_page)
 
 
-#parse_list(scrape_url_page)
+parse_list(scrape_url_page)
