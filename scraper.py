@@ -30,7 +30,7 @@ def parse_list(root):
     """ Takes a listing page and indexes all the listings in it """
     for el in root(".listing a.property_title"):
         page_url = "http://www.tripadvisor.com" + el.get("href")
-                print "Url: %s" % page_url
+        print "Url: %s" % page_url
         page = get_url(page_url)
 
         name = strip_tags(page("#HEADING_GROUP h1").html())
