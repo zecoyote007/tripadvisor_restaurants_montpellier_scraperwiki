@@ -57,7 +57,7 @@ def parse_list(root):
             'telephone': telephone,
             'description': description,
         }
-        scraperwiki.sqlite.save(unique_keys=['source_url'], data=data, table_name="tripadvisor_SOT")
+        scraperwiki.sqlite.save(unique_keys=['source_url'], data=data)
 
 def scrape_activities_in_a_region(url):
     for el in url(".geo_image a"):
@@ -84,7 +84,6 @@ def scrape_activities_in_a_region(url):
 
 scrape_url_page = get_url(scrape_url)
 scrape_activities_in_a_region(scrape_url_page)
-
 
 parse_list(scrape_url_page)
 
