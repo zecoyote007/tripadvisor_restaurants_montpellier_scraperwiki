@@ -34,7 +34,7 @@ def parse_list(root):
         page = get_url(page_url)
 
         name = strip_tags(page("#HEADING_GROUP h1").html())
-        ranking = page(".sprite-ratings").attr("content")
+        ranking = page(".slim_ranking").html())
         #activity = strip_tags(page(".row-fluid  *[itemprop=title]").html())
         address = strip_tags(page(".format_address").html())
         #url = strip_tags(page(".row-fluid .row-fluid *[itemprop=url] a").attr("href"))
@@ -46,7 +46,7 @@ def parse_list(root):
 	else:
 	    email = ""
 	print email
-        description = strip_tags(page(".listing_details").html()).strip()[:1200]
+        description = strip_tags(page(".listing_details").html())
 	print description
         
         data = {
