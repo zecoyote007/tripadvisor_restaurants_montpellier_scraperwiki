@@ -46,7 +46,7 @@ def parse_list(root):
         description = strip_tags(page(".listing_description").html()).strip()[:1200]
         
         print email
-        data = {
+        record = {
             'name': name,
             'source_url': page_url,
             #'url': url,
@@ -57,7 +57,8 @@ def parse_list(root):
             'telephone': telephone,
             'description': description,
         }
-        ScraperWiki.save_sqlite(unique_keys=['source_url'], data=data)
+        scraperwiki.sqlite.save(unique_keys=['source_url'], data=record)
+        #scraperwiki.sqlite.save_var('lastindex', index)
 
 def scrape_activities_in_a_region(url):
     for el in url(".geo_image a"):
