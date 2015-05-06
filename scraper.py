@@ -43,7 +43,7 @@ def parse_list(root):
         email = email_regex.findall(email_raw)  
         if email:
             email = email[0]
-        description = strip_tags(page(".listing_description").html()).strip()[:1200]
+        description = strip_tags(page(".listing_details").html()).strip()[:1200]
         
         print email
         data = {
