@@ -38,7 +38,7 @@ def parse_list(root):
         #activity = strip_tags(page(".row-fluid  *[itemprop=title]").html())
         address = strip_tags(page(".format_address").html())
         #url = strip_tags(page(".row-fluid .row-fluid *[itemprop=url] a").attr("href"))
-        telephone = strip_tags(page(".sprite-greenPhone").next().html())
+        telephone = strip_tags(page(".sprite-grayPhone").next().html())
 	email_raw = strip_tags(page(".sprite-grayEmail").next().attr("onclick"))
         email = email_regex.findall(email_raw)  
         if email:
