@@ -57,7 +57,7 @@ def parse_list(root):
             'telephone': telephone,
             'description': description,
         }
-        #scraperwiki.sqlite.save(unique_keys=['source_url'], data=data)
+        ScraperWiki.save_sqlite(unique_keys=['source_url'], data=data)
 
 def scrape_activities_in_a_region(url):
     for el in url(".geo_image a"):
