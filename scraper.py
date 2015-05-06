@@ -34,6 +34,7 @@ def parse_list(root):
         page = get_url(page_url)
 
         name = strip_tags(page("#HEADING_GROUP h1").html())
+	rating = strip_tags(page(".sprite-rating_rr_fill").attr("alt"))
         ranking = strip_tags(page(".slim_ranking").html())
         #activity = strip_tags(page(".row-fluid  *[itemprop=title]").html())
         address = strip_tags(page(".format_address").html())
@@ -53,6 +54,7 @@ def parse_list(root):
             'name': name,
             'source_url': page_url,
             #'url': url,
+	    'rating' : rating,
             'ranking': ranking,
             'email': email,
             #'activity': activity,
