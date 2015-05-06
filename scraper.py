@@ -34,7 +34,7 @@ def parse_list(root):
         page = get_url(page_url)
 
         name = strip_tags(page("#HEADING_GROUP h1").html())
-        ranking = page(".slim_ranking").html())
+        ranking = strip_tags(page(".slim_ranking").html())
         #activity = strip_tags(page(".row-fluid  *[itemprop=title]").html())
         address = strip_tags(page(".format_address").html())
         #url = strip_tags(page(".row-fluid .row-fluid *[itemprop=url] a").attr("href"))
