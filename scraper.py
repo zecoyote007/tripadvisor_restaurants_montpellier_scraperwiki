@@ -21,7 +21,6 @@ email_regex = re.compile(r'(\b[\w.]+@+[\w.]+.+[\w.]\b)')
 h = HTMLParser.HTMLParser()
 
 def clean(input):
-    input = h.unescape(input)
     input = make_unicode(input)
     input = input.strip(' \t\n\r')
     return input
@@ -29,6 +28,7 @@ def clean(input):
 def make_unicode(input):
     if type(input) != unicode:
         input =  input.decode('utf-8')
+	input = h.unescape(input.decode("utf8"))
         return input
     else:
         return input
