@@ -6,7 +6,7 @@ import re
 from lxml import etree
 from pyquery import PyQuery as pq
 
-#scrape_url = "http://www.tripadvisor.com/RestaurantSearch?geo=187153"
+#scrape_url = "http://www.tripadvisor.fr/RestaurantSearch?geo=187153"
 scrape_url = "http://www.tripadvisor.fr/RestaurantSearch?geo=1221643"
 
 header = { 'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.47 Safari/536.11',
@@ -29,7 +29,7 @@ def strip_tags(value):
 def parse_list(root):
     """ Takes a listing page and indexes all the listings in it """
     for el in root(".listing a.property_title"):
-        page_url = "http://www.tripadvisor.com" + el.get("href")
+        page_url = "http://www.tripadvisor.fr" + el.get("href")
         print page_url
         page = get_url(page_url)
 
@@ -70,19 +70,19 @@ def parse_list(root):
 
 def scrape_activities_in_a_region(url):
     for el in url(".geo_image a"):
-        sub_url = "http://www.tripadvisor.com" + el.get("href")
+        sub_url = "http://www.tripadvisor.fr" + el.get("href")
         
         # go to that sub location page
         sub_page = get_url(sub_url)
         
         # go to the activities page
         if sub_page(".filter#ATTR_CATEGORY_42"):
-            sub_activities_url = "http://www.tripadvisor.com" + sub_page(".filter#ATTR_CATEGORY_42 a").attr("href")
+            sub_activities_url = "http://www.tripadvisor.fr" + sub_page(".filter#ATTR_CATEGORY_42 a").attr("href")
             sub_activities_page = get_url(sub_activities_url)
         
             # go to the individual page (if it exists)
             for el in sub_activities_page(".element_wrap"):
-                   sub_activities_adv_url = "http://www.tripadvisor.com" + sub_activities_page(".element_wrap a").attr("href")
+                   sub_activities_adv_url = "http://www.tripadvisor.fr" + sub_activities_page(".element_wrap a").attr("href")
                    sub_activities_adv_page = get_url(sub_activities_adv_url)
                    
                    print sub_activities_adv_url
