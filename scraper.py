@@ -68,7 +68,7 @@ def parse_page(root):
 
 	print ">>> PROCESSING RECORD"
         print page_url
-	print name.decode("utf-8")
+	print name.encode('ascii', 'ignore')
         if email:
 		print email
 	if telephone:
