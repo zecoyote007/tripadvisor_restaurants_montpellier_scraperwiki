@@ -27,8 +27,10 @@ def clean(input):
 
 def make_unicode(input):
     if type(input) != unicode:
-	input = unicode(input, "utf-8")
-    input = h.unescape(input)
+	input = h.unescape(input)
+	input = input.encode('utf-8')
+    else:
+	input = h.unescape(input)
     return input
 
 def get_url(url):
