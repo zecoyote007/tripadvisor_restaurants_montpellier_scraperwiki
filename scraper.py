@@ -27,7 +27,7 @@ def clean(input):
 
 def make_unicode(input):
     if type(input) != unicode:
-	input = input.decode("utf-8")
+	input = unicode(input, "utf-8")
     input = h.unescape(input)
     return input
 
