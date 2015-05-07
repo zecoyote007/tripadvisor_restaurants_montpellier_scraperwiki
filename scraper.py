@@ -14,6 +14,13 @@ header = { 'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleW
 
 email_regex = re.compile(r'(\b[\w.]+@+[\w.]+.+[\w.]\b)')
 
+def make_unicode(input):
+    if type(input) != unicode:
+        input =  input.decode('utf-8')
+        return input
+    else:
+        return input
+
 def get_url(url):
     req = urllib2.Request(url, None, header)
     response = urllib2.urlopen(req)
@@ -29,14 +36,12 @@ def strip_tags(value):
 def parse_list(root):
     """ Takes a listing page and indexes all the listings in it """
     for el in root(".listing a.property_title"):
-        page_url = "http://www.tripadvisor.fr" + el.get("href")
-        print page_url
+        page_url = "http://www.tripadvisor.fr" + el.get("href").strip(' \t\n\r')
         page = get_url(page_url)
-
-        name = strip_tags(page("#HEADING_GROUP h1").html())
+        name = strip_tags(page("#HEADING_GROUP h1").html()).strip(' \t\n\r')
 	rating = strip_tags(page(".sprite-rating_rr_fill").attr("alt"))
         ranking = strip_tags(page(".slim_ranking").html())
-	hours = strip_tags(page(".hoursOverlay").html())
+	hours = strip_tags(page(".hoursOverlay").html()).strip(' \t\n\r')
         #activity = strip_tags(page(".row-fluid  *[itemprop=title]").html())
         address = strip_tags(page(".format_address").html())
         #url = strip_tags(page(".row-fluid .row-fluid *[itemprop=url] a").attr("href"))
@@ -47,10 +52,12 @@ def parse_list(root):
             email = emails_parsed[0]
 	else:
 	    email = ""
-	print email
-        #description = strip_tags(page(".detailsOverlayHide").html())
-	description = strip_tags(page(".listing_details").html())
+	description = make_unicode(strip_tags(page(".listing_details").html())).strip(' \t\n\r')
+
+	print name
+        print email
 	print description
+	print page_url
         
         data = {
             'name': name,
