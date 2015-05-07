@@ -33,6 +33,10 @@ def make_unicode(input):
 	input = h.unescape(input)
     return input
 
+def print_ascii(input):
+    if input:
+	print input.encode('ascii', 'ignore')
+
 def get_url(url):
     req = urllib2.Request(url, None, header)
     response = urllib2.urlopen(req)
@@ -68,15 +72,11 @@ def parse_page(root):
 
 	print ">>> PROCESSING RECORD"
         print page_url
-	print name.encode('ascii', 'ignore')
-        if email:
-		print email
-	if telephone:
-		print telephone
-	if address:
-		print address
-	if description:
-		print description
+	print_ascii(name)
+	print_ascii(email)
+	print_ascii(telephone)
+	print_ascii(address)
+	print_ascii(description)
 	print "-" * 40
         
         data = {
