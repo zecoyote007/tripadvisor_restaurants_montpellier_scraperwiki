@@ -4,6 +4,7 @@ import urllib2
 import urllib
 import re
 from lxml import etree
+from lxml import html
 from pyquery import PyQuery as pq
 
 #Montpellier
@@ -47,7 +48,8 @@ def parse_page(root):
     for el in root(".listing a.property_title"):
         page_url = "http://www.tripadvisor.fr" + el.get("href")
         page = get_url(page_url)
-        name = clean(strip_tags(page("#HEADING_GROUP h1").html()))
+	name = strip_tags(page("#HEADING_GROUP h1").html())
+	name = clean(html.fromstring(name).text)
 	rating = strip_tags(page(".sprite-rating_rr_fill").attr("alt"))
         ranking = strip_tags(page(".slim_ranking").html())
 	hours = strip_tags(page(".hoursOverlay").html())
